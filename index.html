@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Revit Lookup Table Generator</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body class="min-h-screen bg-gray-50">
+    <div class="container mx-auto px-4 py-8">
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-gray-900 mb-2">
+                Revit Lookup Table Generator
+            </h1>
+            <p class="text-gray-600">
+                Create parameter combinations with proper Revit formatting
+            </p>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+            <form id="parameterForm" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <input type="text" id="paramName" placeholder="Parameter name" class="px-4 py-2 border rounded-lg">
+                <select id="paramType" class="px-4 py-2 border rounded-lg">
+                    <option value="NUMBER">Number</option>
+                    <option value="LENGTH">Length</option>
+                    <option value="AREA">Area</option>
+                    <option value="VOLUME">Volume</option>
+                    <option value="ANGLE">Angle</option>
+                    <option value="OTHER">Other</option>
+                </select>
+                <select id="paramUnit" class="px-4 py-2 border rounded-lg md:col-span-2"></select>
+                <button type="submit" class="flex items-center justify-center gap-2 px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 md:col-span-2">
+                    Add Parameter
+                </button>
+            </form>
+        </div>
+
+        <div id="mappingRules" class="bg-white rounded-lg shadow-md p-6 mb-6">
+            <h2 class="text-xl font-semibold mb-4">Parameter Mapping Rules</h2>
+            <div id="mappingList" class="space-y-4"></div>
+            <button id="addMapping" class="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                Add Mapping Rule
+            </button>
+        </div>
+
+        <div id="parameterList" class="bg-white rounded-lg shadow-md p-6 mb-6">
+            <!-- Parameters will be inserted here -->
+        </div>
+
+        <div id="previewSection" class="bg-white rounded-lg shadow-md p-6 hidden">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl font-semibold">Generated Table</h2>
+                <button id="downloadBtn" class="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
+                    Download CSV
+                </button>
+            </div>
+            <div id="previewTable" class="overflow-x-auto">
+                <!-- Table will be inserted here -->
+            </div>
+        </div>
+    </div>
+    <script type="module">
+        import { PARAMETER_TYPES } from './js/config/parameterTypes.js';
+        import { ParameterManager } from './js/parameters.js';
+        import { MappingManager } from './js/mapping.js';
+        
+        // Make PARAMETER_TYPES available globally
+        window.PARAMETER_TYPES = PARAMETER_TYPES;
+        
+        // Initialize managers
+        window.parameterManager = new ParameterManager();
+        window.mappingManager = new MappingManager(window.parameterManager);
+    </script>
+</body>
+</html>
