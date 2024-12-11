@@ -3,19 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Revit Lookup Table Generator</title>
+    <title>Lookup Table Generator</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="styles.css" rel="stylesheet">
 </head>
 <body class="min-h-screen bg-gray-50">
     <div class="container mx-auto px-4 py-8">
-        <div class="mb-8">
-            <h1 class="text-3xl font-bold text-gray-900 mb-2">
-                Revit Lookup Table Generator
-            </h1>
-            <p class="text-gray-600">
-                Create parameter combinations with proper Revit formatting
-            </p>
+        <div class="mb-8 flex justify-between items-center">
+            <div>
+                <h1 class="text-3xl font-bold text-gray-900 mb-2">
+                    Lookup Table Generator
+                </h1>
+                <p class="text-gray-600">
+                    Create parameter combinations with proper formatting
+                </p>
+            </div>
+            <div class="flex gap-4">
+                <input type="file" id="importInput" accept=".json" class="hidden" />
+                <button id="importBtn" 
+                        class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" 
+                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="17 8 12 3 7 8"></polyline>
+                        <line x1="12" y1="3" x2="12" y2="15"></line>
+                    </svg>
+                    Import
+                </button>
+                <button id="exportBtn" 
+                        class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" 
+                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                    Export
+                </button>
+            </div>
         </div>
 
         <div class="bg-white rounded-lg shadow-md p-6 mb-6">
@@ -52,6 +77,12 @@
             <div class="flex justify-between items-center mb-4">
                 <h2 class="text-xl font-semibold">Generated Table</h2>
                 <button id="downloadBtn" class="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" 
+                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
                     Download CSV
                 </button>
             </div>
@@ -59,18 +90,12 @@
                 <!-- Table will be inserted here -->
             </div>
         </div>
+
+        <div id="notification" class="fixed top-4 right-4 max-w-sm bg-gray-800 text-white p-4 rounded-lg shadow-lg transform transition-transform duration-300 translate-y-[-150%]">
+            <p id="notificationText"></p>
+        </div>
     </div>
-    <script type="module">
-        import { PARAMETER_TYPES } from './js/config/parameterTypes.js';
-        import { ParameterManager } from './js/parameters.js';
-        import { MappingManager } from './js/mapping.js';
-        
-        // Make PARAMETER_TYPES available globally
-        window.PARAMETER_TYPES = PARAMETER_TYPES;
-        
-        // Initialize managers
-        window.parameterManager = new ParameterManager();
-        window.mappingManager = new MappingManager(window.parameterManager);
-    </script>
+
+    <script src="script.js"></script>
 </body>
 </html>
